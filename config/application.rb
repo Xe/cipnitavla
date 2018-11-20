@@ -19,6 +19,8 @@ Bundler.require(*Rails.groups)
 
 Dotenv::Railtie.load
 
+require_relative "../app/middleware/fakeauth"
+
 module Cipnitavla
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
@@ -36,6 +38,7 @@ module Cipnitavla
 
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use ActionDispatch::Session::CookieStore
+    config.middleware.use Fakeauth
 
     #config.middleware.use Heroku::Bouncer,
     #  oauth: {

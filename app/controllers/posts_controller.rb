@@ -6,8 +6,7 @@ require_relative "../mediators/read_post"
 class PostsController < ApplicationController
   def create
     args = {
-      #user_id: request.env["bouncer.user"],
-      user_id: "shachi", # orca
+      user_id: request.env["bouncer.user"],
       body:    params[:body],
     }
 
