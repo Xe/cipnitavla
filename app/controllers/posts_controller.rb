@@ -1,3 +1,6 @@
+require_relative "../mediators/create_post"
+require_relative "../mediators/read_post"
+
 class PostsController < ApplicationController
   def create
     args = {
@@ -6,10 +9,15 @@ class PostsController < ApplicationController
       body:    params[:body],
     }
 
-    Mediators::CreatePost.run(args)
+    render json: Mediators::CreatePost.run(args)
   end
 
   def read
+    args = {
+      post_id: params[:id],
+    }
+
+    render json: Mediators::ReadPost.run(args)
   end
 
   def delete
