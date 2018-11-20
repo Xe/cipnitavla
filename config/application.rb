@@ -31,5 +31,11 @@ module Cipnitavla
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    config.middleware.use Heroku::Bouncer,
+      oauth: {
+        id:     ENV['HEROKU_OAUTH_ID'],
+        secret: ENV['HEROKU_OAUTH_SECRET']
+      }
   end
 end
