@@ -17,6 +17,8 @@ require "rails/test_unit/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+Dotenv::Railtie.load
+
 module Cipnitavla
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
@@ -32,10 +34,14 @@ module Cipnitavla
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
-    config.middleware.use Heroku::Bouncer,
-      oauth: {
-        id:     ENV['HEROKU_OAUTH_ID'],
-        secret: ENV['HEROKU_OAUTH_SECRET']
-      }
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore
+
+    #config.middleware.use Heroku::Bouncer,
+    #  oauth: {
+    #    id:     ENV['HEROKU_OAUTH_ID'],
+    #    secret: ENV['HEROKU_OAUTH_SECRET']
+    #  },
+    #  secret: ENV['HEROKU_BOUNCER_SECRET']
   end
 end
